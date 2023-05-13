@@ -12,7 +12,7 @@ DELETE_ACTION = "delete_object"
 
 
 class AwsS3StorageProvider(StorageProvider):
-    def __init__(self, bucket_name: str = settings.AWS_STORAGE_BUCKET_NAME):
+    def __init__(self, bucket_name: str = settings.AWS_STORAGE_BUCKET_NAME) -> None:
         super().__init__()
         self.bucket_name = bucket_name
 
@@ -34,14 +34,14 @@ class AwsS3StorageProvider(StorageProvider):
             action = CREATE_ACTION
         if has_delete:
             action = DELETE_ACTION
-        url = self.client.generate_presigned_url(
+        url: str = self.client.generate_presigned_url(
             action,
             Params={"Bucket": self.bucket_name, "Key": blob_name},
             ExpiresIn=expire_seconds,
         )
         return url
 
-    def get_presign_url(
+    def get_presign_url(  # noqa: CFQ002
         self,
         blob_name: str,
         has_read: bool = True,

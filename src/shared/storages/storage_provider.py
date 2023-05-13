@@ -3,7 +3,7 @@ from typing import Any, Optional
 
 
 class StorageProvider(ABC):
-    def __init__(self):
+    def __init__(self) -> None:
         self.client = self._init_client()
         self.expire_seconds = 300
 
@@ -11,7 +11,8 @@ class StorageProvider(ABC):
     def _init_client(self) -> Any:
         pass
 
-    def get_presign_url(
+    @abstractmethod
+    def get_presign_url(  # noqa: CFQ002
         self,
         blob_name: str,
         has_read: bool = True,

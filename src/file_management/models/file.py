@@ -8,4 +8,5 @@ class File(BaseModel):
     # todo: hiepdv: wait for confirmation from Everton in order to add the remaining fields
 
     def __str__(self) -> str:
-        return self.file.name
+        name: str = self.file.name
+        return name

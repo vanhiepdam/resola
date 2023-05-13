@@ -1,6 +1,7 @@
-from shared.models.base_model import BaseModel
 from django.contrib import admin
 from reversion.admin import VersionAdmin  # type: ignore
+
+from shared.models.base_model import BaseModel
 
 
 class BaseModelAdmin(VersionAdmin):

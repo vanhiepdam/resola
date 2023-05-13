@@ -6,35 +6,34 @@ authors = ["DH <DH>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
-Django = "^4.1.4"
-djangorestframework = "^3.14.0"
-psycopg2-binary = "^2.9.5"
-whitenoise = "^6.3.0"
-factory-boy = "^3.2.1"
-python-dotenv = "^0.21.1"
-pytest-mock = "^3.10.0"
-drf-spectacular = "^0.25.1"
-django-filter = "^22.1"
-django-storages = "^1.13.2"
-boto3 = "^1.26.133"
+python = "3.10"
+Django = "4.2.1"
+djangorestframework = "3.14.0"
+psycopg2-binary = "2.9.6"
+whitenoise = "6.4.0"
+python-dotenv = "0.21.1"
+drf-spectacular = "0.25.1"
+django-filter = "22.1"
+boto3 = "1.26.133"
 
 [tool.poetry.group.test.dependencies]
-pytest = "^7.2.0"
-pytest-django = "^4.5.2"
-pytest-cov = "^4.0.0"
-black = "^22.12.0"
-isort = "^5.11.4"
-flake8 = "^6.0.0"
-flake8-black = "^0.3.6"
-flake8-isort = "^5.0.3"
-flake8-functions = "^0.0.7"
-flake8-bugbear = "^22.12.6"
-flake8-bandit = "^4.1.1"
-mypy = "^0.991"
-testcontainers = {extras = ["postgres"], version = "^3.7.1"}
-sqlalchemy = "^2.0.0"
-safety = "^2.3.5"
+pytest = "7.3.1"
+factory-boy = "3.2.1"
+pytest-mock = "3.10.0"
+pytest-django = "4.5.2"
+pytest-cov = "4.0.0"
+black = "22.12.0"
+isort = "5.12.0"
+flake8 = "6.0.0"
+flake8-black = "0.3.6"
+flake8-isort = "5.0.3"
+flake8-functions = "0.0.7"
+flake8-bugbear = "22.12.6"
+flake8-bandit = "4.1.1"
+mypy = "0.991"
+testcontainers = {extras = ["postgres"], version = "3.7.1"}
+sqlalchemy = "2.0.13"
+safety = "2.3.5"
 
 [build-system]
 requires = ["poetry-core"]
@@ -69,4 +68,10 @@ disallow_untyped_decorators = false
 disallow_untyped_defs = true
 
 [[tool.mypy.overrides]]
+module = [
+    "django.*",
+    "rest_framework.*",
+    "testcontainers.*",
+    "boto3.*",
+]
 ignore_missing_imports = true

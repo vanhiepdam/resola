@@ -10,7 +10,7 @@ class CanRetrieveFilePermission(BasePermission):
         if user.is_superuser:
             return True
 
-        return user.has_perm("file_management.can_view_file")
+        return user.has_perm("file_management.can_view_file")  # type: ignore[no-any-return]
 
 
 class CanListFilePermission(BasePermission):
@@ -22,7 +22,7 @@ class CanListFilePermission(BasePermission):
         if user.is_superuser:
             return True
 
-        return user.has_perm("file_management.can_view_file")
+        return user.has_perm("file_management.can_view_file")  # type: ignore[no-any-return]
 
 
 class CanUploadFilePermission(BasePermission):
@@ -34,7 +34,7 @@ class CanUploadFilePermission(BasePermission):
         if user.is_superuser:
             return True
 
-        return user.has_perm("file_management.can_create_file")
+        return user.has_perm("file_management.can_create_file")  # type: ignore[no-any-return]
 
 
 class CanDeleteFilePermission(BasePermission):
@@ -46,4 +46,4 @@ class CanDeleteFilePermission(BasePermission):
         if user.is_superuser:
             return True
 
-        return user.has_perm("file_management.can_delete_file")
+        return user.has_perm("file_management.can_delete_file")  # type: ignore[no-any-return]
