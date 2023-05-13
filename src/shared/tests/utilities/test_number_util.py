@@ -2,6 +2,7 @@
 from decimal import Decimal, InvalidOperation
 
 import pytest
+
 from shared.utilities.number import NumberUtil
 
 

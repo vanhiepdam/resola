@@ -2,8 +2,9 @@
 from datetime import datetime, timedelta
 
 import pytest
-from shared.utilities.datetime import DateTimeUtil
+
 from main import settings
+from shared.utilities.datetime import DateTimeUtil
 
 
 class TestDateTimeUtil:
