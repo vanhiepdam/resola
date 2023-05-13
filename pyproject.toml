@@ -71,5 +71,6 @@ disallow_untyped_defs = true
 module = [
     "django.*",
     "rest_framework.*",
+    "testcontainers.*",
 ]
 ignore_missing_imports = true
