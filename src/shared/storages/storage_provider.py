@@ -1,14 +1,23 @@
-from abc import ABC
+from abc import ABC, abstractmethod
+from typing import Any, Optional
 
 
 class StorageProvider(ABC):
-    @staticmethod
+    def __init__(self):
+        self.client = self._init_client()
+        self.expire_seconds = 300
+
+    @abstractmethod
+    def _init_client(self) -> Any:
+        pass
+
     def get_presign_url(
+        self,
         blob_name: str,
         has_read: bool = True,
         has_write: bool = False,
-        has_add: bool = False,
         has_create: bool = False,
         has_delete: bool = False,
-    ):
+        expire_seconds: Optional[int] = None
+    ) -> str:
         pass
