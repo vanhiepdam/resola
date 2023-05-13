@@ -11,7 +11,7 @@ class TestAwsS3StorageProvider:
     @pytest.mark.parametrize("has_delete", [True, False])
     @pytest.mark.parametrize("expire_seconds", [None, 300])
     def test_success__get_presigned_url(
-            self, has_read, has_write, has_add, has_create, has_delete, expire_seconds, mocker
+            self, has_read, has_write, has_create, has_delete, expire_seconds, mocker
     ):
         # Arrange
         url_value = "https://test.txt"
