@@ -1,5 +1,6 @@
 # type: ignore
 import pytest
+
 from shared.models.state_mixin import BaseStateSetting
 
 

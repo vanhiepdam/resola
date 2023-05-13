@@ -1,15 +1,19 @@
+from abc import abstractmethod
+
 from shared.storages.storage_provider import StorageProvider
 
 
 class FileModelMixin:
-    storage_provider: StorageProvider = None
+    @abstractmethod
+    @property
+    def storage_provider(self) -> StorageProvider:
+        pass
 
     def get_file_presigned_url(  # noqa: CFQ002
         self,
         field_name: str,
         has_read: bool = True,
         has_write: bool = False,
-        has_add: bool = False,
         has_create: bool = False,
         has_delete: bool = False,
     ) -> str:
@@ -17,7 +21,6 @@ class FileModelMixin:
             blob_name=getattr(self, field_name).name,
             has_read=has_read,
             has_write=has_write,
-            has_add=has_add,
             has_create=has_create,
             has_delete=has_delete,
         )

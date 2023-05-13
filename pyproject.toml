@@ -68,4 +68,8 @@ disallow_untyped_decorators = false
 disallow_untyped_defs = true
 
 [[tool.mypy.overrides]]
+module = [
+    "django.*",
+    "rest_framework.*",
+]
 ignore_missing_imports = true
