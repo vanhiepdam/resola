@@ -1,23 +1,21 @@
-from django.contrib.auth import get_user_model
 from django.db import models
 
+from main import settings
 from shared.utilities.text import TextUtil
-
-UserModel = get_user_model()
 
 
 class BaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
     created_by = models.ForeignKey(
-        UserModel,
+        settings.AUTH_USER_MODEL,
         null=True,
         blank=True,
         related_name="%(app_label)s_%(class)s_created",
         on_delete=models.SET_NULL,
     )
     updated_by = models.ForeignKey(
-        UserModel,
+        settings.AUTH_USER_MODEL,
         null=True,
         blank=True,
         related_name="%(app_label)s_%(class)s_updated",
