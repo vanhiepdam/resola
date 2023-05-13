@@ -3,7 +3,7 @@ lint:
 	flake8 . --exclude=venv
 
 	@echo "Running dependencies checker..."
-	poetry export -f requirements.txt --output requirements.txt --without-hashes --dev
+	poetry export -f requirements.txt --output requirements.txt --without-hashes --with test
 	safety check --bare -r requirements.txt
 
 	@echo "Running type annotation checking..."
