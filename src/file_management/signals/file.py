@@ -5,5 +5,5 @@ from file_management.models import File
 
 
 @receiver(post_delete, sender=File)
-def post_delete_file(sender, instance, using, **kwargs):
+def post_delete_file(sender, instance, using, **kwargs):  # type: ignore
     instance.file.delete(save=False)

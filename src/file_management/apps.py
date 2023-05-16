@@ -5,5 +5,5 @@ class FileManagementConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "file_management"
 
-    def ready(self):
+    def ready(self) -> None:
         import file_management.signals  # noqa

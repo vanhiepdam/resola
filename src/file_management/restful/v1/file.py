@@ -38,14 +38,14 @@ class FileViewSetV1(
             return RetrieveFileSerializerV1
         return super().get_serializer_class()
 
-    def get_permissions(self) -> list[BasePermission]:
+    def get_permissions(self) -> list[BasePermission]:  # noqa[CFQ004]
         if self.action == "list":
             permission_classes = [CanListFilePermission | CanUploadFilePermission]
-            return [permission() for permission in permission_classes]
+            return [permission() for permission in permission_classes]  # type: ignore[operator]
         elif self.action == "retrieve":
             permission_classes = [CanRetrieveFilePermission | CanUploadFilePermission]
-            return [permission() for permission in permission_classes]
+            return [permission() for permission in permission_classes]  # type: ignore[operator]
         elif self.action == "destroy":
-            permission_classes = [CanDeleteFilePermission]
-            return [permission() for permission in permission_classes]
+            permission_classes = [CanDeleteFilePermission]  # type: ignore[list-item]
+            return [permission() for permission in permission_classes]  # type: ignore[operator]
         return super().get_permissions()  # type: ignore[no-any-return]
