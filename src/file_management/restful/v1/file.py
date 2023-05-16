@@ -27,7 +27,7 @@ class FileViewSetV1(
     filterset_class = ListFileFilter
 
     def get_queryset(self) -> QuerySet:
-        return File.objects.all().filter_by_user_id(user_id=self.request.user.id)
+        return File.objects.all().filter_by_user_id(user_id=self.request.user.id).full_prefetch()
 
     def get_serializer_class(self):  # type: ignore
         if self.action == "list":
