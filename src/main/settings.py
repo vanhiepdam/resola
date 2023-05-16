@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     "django_filters",
     # local apps
     "user",
+    "tenant",
+    "file_management",
 ]
 
 MIDDLEWARE = [
@@ -151,7 +153,11 @@ REST_FRAMEWORK = {
 }
 
 # File storage
-STORAGES = {"default": {"BACKEND": "storages.backends.s3boto3.S3Boto3Storage"}}
+STORAGES = {
+    "default": {
+        "BACKEND": getenv("DEFAULT_FILE_STORAGE", "storages.backends.s3boto3.S3Boto3Storage")
+    }
+}
 AWS_STORAGE_BUCKET_NAME = getenv("AWS_STORAGE_BUCKET_NAME", "")
 
 

@@ -4,6 +4,14 @@ This repository contains the solution for the Resola challenge including the sys
 ## Problem
 TODO
 
+My Assumptions:
+- A tenant is more like a workspace which contains multiple resources.
+- User can be in multiple tenants at the same time.
+- Each resource is only in one single tenant.
+- Each resource would have multiple files. Each file can only belong to one resource.
+- User can upload files to resources in the tenant that they are in.
+
+
 ## Features at a glance
 - Upload a file to the system
 - Retrieve a file from the system
