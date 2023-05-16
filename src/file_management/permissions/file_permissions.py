@@ -2,7 +2,7 @@ from rest_framework.permissions import BasePermission
 
 
 class CanRetrieveFilePermission(BasePermission):
-    def has_object_permission(self, request, view, obj) -> bool:  # type: ignore
+    def has_permission(self, request, view) -> bool:  # type: ignore
         user = request.user
         if not user.is_authenticated or not user.is_active:
             return False
