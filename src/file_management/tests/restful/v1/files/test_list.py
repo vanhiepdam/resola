@@ -28,7 +28,14 @@ class TestListFileViewSetV1:
         # then
         assert response.status_code == 403
 
-    def test_success__user_has_correct_permission(self, api_client):
+    @pytest.mark.parametrize(
+        "permission_codename",
+        [
+            "view_file",
+            "add_file",
+        ]
+    )
+    def test_success__user_has_correct_permission(self, api_client, permission_codename):
         # given user
         user = UserFactory()
 
@@ -36,7 +43,7 @@ class TestListFileViewSetV1:
         permissions = Permission.objects.filter(
             content_type__app_label="file_management",
             content_type__model="file",
-            codename="view_file",
+            codename=permission_codename,
         )
         user.user_permissions.set(permissions)
 
@@ -67,7 +74,14 @@ class TestListFileViewSetV1:
         assert data["results"][0]["resource"]["tenant"]["code"] == file.resource.tenant.code
         assert data["results"][0]["resource"]["tenant"]["name"] == file.resource.tenant.name
 
-    def test_success__filter_by_tenant_id(self, api_client):
+    @pytest.mark.parametrize(
+        "permission_codename",
+        [
+            "view_file",
+            "add_file",
+        ]
+    )
+    def test_success__filter_by_tenant_id(self, api_client, permission_codename):
         # given user
         tenant_a = TenantFactory()
         tenant_b = TenantFactory()
@@ -82,7 +96,7 @@ class TestListFileViewSetV1:
         permissions = Permission.objects.filter(
             content_type__app_label="file_management",
             content_type__model="file",
-            codename="view_file",
+            codename=permission_codename,
         )
         user.user_permissions.set(permissions)
 

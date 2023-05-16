@@ -34,7 +34,7 @@ class CanUploadFilePermission(BasePermission):
         if user.is_superuser:
             return True
 
-        return user.has_perm("file_management.create_file")  # type: ignore[no-any-return]
+        return user.has_perm("file_management.add_file")  # type: ignore[no-any-return]
 
 
 class CanDeleteFilePermission(BasePermission):

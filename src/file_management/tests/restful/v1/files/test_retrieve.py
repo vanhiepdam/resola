@@ -51,7 +51,14 @@ class TestRetrieveFileViewSetV1:
         # then
         assert response.status_code == 404
 
-    def test_success__user_has_correct_permission(self, api_client):
+    @pytest.mark.parametrize(
+        "permission_codename",
+        [
+            "view_file",
+            "add_file",
+        ]
+    )
+    def test_success__user_has_correct_permission(self, api_client, permission_codename):
         # given user
         user = UserFactory()
 
@@ -59,7 +66,7 @@ class TestRetrieveFileViewSetV1:
         permissions = Permission.objects.filter(
             content_type__app_label="file_management",
             content_type__model="file",
-            codename="view_file",
+            codename=permission_codename,
         )
         user.user_permissions.set(permissions)
 
