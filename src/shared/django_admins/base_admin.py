@@ -1,10 +1,10 @@
 from django.contrib import admin
-from reversion.admin import VersionAdmin  # type: ignore
+from django.contrib.admin import ModelAdmin
 
 from shared.models.base_model import BaseModel
 
 
-class BaseModelAdmin(VersionAdmin):
+class BaseModelAdmin(ModelAdmin):
     readonly_fields = [
         "id",
         "created_by",
