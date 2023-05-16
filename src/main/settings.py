@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     "django_filters",
     # local apps
     "user",
+    "tenant",
+    "file_management",
 ]
 
 MIDDLEWARE = [
