@@ -9,4 +9,4 @@ class Resource(BaseModel):
     name = models.CharField(max_length=255)
 
     def __str__(self) -> str:
-        return self.name
+        return self.name  # type: ignore[no-any-return]

@@ -2,6 +2,7 @@ import factory
 from django.db.models.signals import post_save
 from factory.django import DjangoModelFactory
 
+from shared.utilities.text import TextUtil
 from user.models import User
 
 
@@ -11,10 +12,10 @@ class UserFactory(DjangoModelFactory):
         model = User
         django_get_or_create = ("username",)
 
-    username = factory.LazyAttribute(lambda x: factory.Faker('name'))
+    username = factory.LazyAttribute(lambda x: TextUtil.generate_random_text())
 
     @factory.post_generation
-    def tenants(self, create, extracted, **kwargs):
+    def tenants(self, create, extracted, **kwargs):  # type: ignore[no-untyped-def]
         if not create:
             return
 

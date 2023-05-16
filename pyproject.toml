@@ -74,5 +74,7 @@ module = [
     "rest_framework.*",
     "testcontainers.*",
     "boto3.*",
+    "factory.*",
+    "django_filters.*",
 ]
 ignore_missing_imports = true
