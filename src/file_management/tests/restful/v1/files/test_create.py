@@ -2,6 +2,7 @@
 import pytest
 from django.contrib.auth.models import Permission
 
+from file_management.models import File
 from tenant.tests.factories.resource import ResourceFactory
 from tenant.tests.factories.tenant import TenantFactory
 from user.tests.factories.user import UserFactory
@@ -126,6 +127,14 @@ class TestCreateFileViewSetV1:
         data = response.json()
         assert data["id"] is not None
         assert data["presign_url"] == "https://test.com"
+        assert data["file_name"] == "test_file_name"
+
+        # assert db
+        assert File.objects.count() == 1
+        file = File.objects.first()
+        assert file.resource == resource
+        assert file.file.name.endswith("test_file_name")
+        assert file.id == data["id"]
 
     @pytest.mark.parametrize(
         "permission_codename",
@@ -174,3 +183,11 @@ class TestCreateFileViewSetV1:
         data = response.json()
         assert data["id"] is not None
         assert data["presign_url"] == "https://test.com"
+        assert data["file_name"] == "test_file_name"
+
+        # assert db
+        assert File.objects.count() == 1
+        file = File.objects.first()
+        assert file.resource == resource
+        assert file.file.name.endswith("test_file_name")
+        assert file.id == data["id"]

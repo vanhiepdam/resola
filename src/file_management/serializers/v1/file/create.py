@@ -8,13 +8,17 @@ from tenant.models import Resource
 
 class CreateFileResponseSerializerV1(BaseModelSerializer):
     presign_url = serializers.SerializerMethodField()
+    file_name = serializers.SerializerMethodField()
 
     class Meta:
         model = File
-        fields = ["id", "presign_url"]
+        fields = ["id", "file_name", "presign_url"]
 
     def get_presign_url(self, instance: File) -> str:
         return instance.get_file_presigned_url(field_name="file", has_read=True, has_write=True)
+
+    def get_file_name(self, instance: File) -> str:
+        return instance.get_original_file_name(field_name="file")
 
 
 class CreateFileSerializerV1(BaseModelSerializer):
