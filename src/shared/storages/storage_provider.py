@@ -19,6 +19,6 @@ class StorageProvider(ABC):
         has_write: bool = False,
         has_create: bool = False,
         has_delete: bool = False,
-        expire_seconds: Optional[int] = None
-    ) -> str:
+        expire_seconds: Optional[int] = None,
+    ) -> Optional[str]:
         pass

@@ -4,7 +4,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: deployments/Dockerfile
     env_file:
       - .env
     ports:
@@ -18,7 +18,12 @@ services:
       - /bin/bash
       - -c
       - |
-          sh entrypoint.sh
+          python src/manage.py collectstatic
+          python src/manage.py migrate
+          python src/manage.py loaddata seeds/seed.json
+          python src/manage.py runserver 0.0.0.0:8000
+    networks:
+      - django_net
 
   db:
     image: postgres:14-alpine
@@ -37,3 +42,9 @@ services:
       timeout: 3s
       retries: 5
     command: [ "postgres", "-c", "log_statement=all" ]
+    networks:
+        - django_net
+
+networks:
+    django_net:
+        driver: bridge
