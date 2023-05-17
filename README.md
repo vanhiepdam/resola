@@ -26,10 +26,24 @@ because I could not do confirm the requirements with you guys.
 But it will work very well with my expectation in [API Documentation section](#api-documentation) 
 
 #### What are completed
-TODO
+1. 4 apis: upload, retrieve, delete, list
+2. Store files in AWS S3
+3. File metadata was stored in PostgreSQL 
+4. API supported authentication with JWT and authorization with permission
+5. Support file to expire after a certain time
+6. Pagination for list api
+7. Filtering by tenant_id for list api 
+8. Source code in a Github repository 
+9. Documentation on how to deploy the application 
+10. Documentation on how to use the application 
+11. Unit tests for apis, models, model managers, utils, services 
+12. Deploy API to AWS EC2 
+13. System design documentation including diagrams and descriptions 
+14. CI/CD pipeline
 
 #### What are not completed
-TODO
+1. The API should support files to be public or private => I don't really understand this requirement, want to ask but still got no answer for previous questions
+2. HTTPs for deployed API => I don't have a domain to apply SSL certificate. But client still have to use HTTPS for uploading files to AWS S3
 
 ## Features at a glance
 - Upload a file to the system
@@ -40,7 +54,33 @@ TODO
 ## Documentation
 
 ### Live Usage
-TODO AFTER DEPLOY TO AWS
+To test the API, you can checkout this [http://18.183.204.247/api-doc](http://18.183.204.247/api-doc) and interact with the API directly on the Swagger UI.
+
+Also, you can go to the Django admin site at [http://18.183.204.247/admin](http://18.183.204.247/admin) to manage the data such as file, resource, tenant, user, permission
+
+Django admin credentials:
+```
+account/password: admin/admin
+```
+
+#### Instructions of Django admin
+1. Table User is used to manage users
+2. Table Tenant is used to manage tenants
+3. Table Resource is used to manage resources
+4. Table File is used to manage files
+5. To grant permission to a specific user, go to the user detail page
+   1. Go to `User permissions` field
+   2. Select permission that you want to grant to the user
+   3. Click `Save` button
+   4. Permissions related to file are:
+      1. `File management | file | Can add file` => This permission is required to upload a file
+      2. `File management | file | Can view file` => This permission is required to retrieve a file and list files
+      3. `File management | file | Can delete file` => This permission is required to delete a file
+6. There are some existing data
+    1. User: `test1/test1`. Tenant `Tenant A, Tenant B`
+    2. User: `test2/test2`. Tenant `Tenant B`
+    3. Tenant A has 2 resources: `Resource 1 A, Resource 2 A`
+    4. Tenant B has 1 resource: `Resource 3 B` 
 
 ### Introduction
 - [python-3.10](https://www.python.org/) for building backend application
@@ -140,9 +180,6 @@ pytest
 - Use AWS RDS instead of EC2 to store data
 
 # API Documentation
-After deploying successfully, you can access the API documentation at [http://localhost:8000/api-doc](http://localhost:8000/api-doc)
-Below is the list of endpoints that you can use to interact with the system in brief
-
 1. Get access token
 - Endpoint: POST `/api/v1/auth/token`
 - Description: Get access token for the current user. The access token will be used to authenticate the user in the system

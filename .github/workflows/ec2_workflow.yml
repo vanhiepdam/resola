@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push' }}
     steps:
-      - name: SSH to staging server
+      - name: SSH to server
         uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ vars.HOST_ADDRESS }}
