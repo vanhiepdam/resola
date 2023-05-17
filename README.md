@@ -11,6 +11,7 @@ Look at the requirements [link](https://gist.github.com/evert0n/d86eec2e5dfc5ac2
 - Resource
 - File
 
+### Assertiveness
 I already had some concerns about the relationships between these objects but unfortunately, 
 I got no answer at all after sending several emails. 
 I guess he is busy on something. So, to not be blocked, I decided to go with this assumption:
@@ -19,6 +20,16 @@ I guess he is busy on something. So, to not be blocked, I decided to go with thi
 - Each resource is only in one single tenant.
 - Each resource would have multiple files. Each file can only belong to one resource.
 - User can upload files to resources in the tenant that they are in.
+
+**🔔 NOTE**: The result of this application may not be the same as your expected result 
+because I could not do confirm the requirements with you guys. 
+But it will work very well with my expectation in [API Documentation section](#api-documentation) 
+
+#### What are completed
+TODO
+
+#### What are not completed
+TODO
 
 ## Features at a glance
 - Upload a file to the system
@@ -100,26 +111,6 @@ make up
 account/password: admin/admin
 ```
 
-### API Documentation
-After deploying successfully, you can access the API documentation at [http://localhost:8000/api-doc](http://localhost:8000/api-doc)
-
-1. List files
-- Endpoint: GET `/api/v1/files`
-- Description: List all files in the system that were uploaded by the current user
-
-2. Upload a file
-- Endpoint: POST `/api/v1/files`
-- Upload file to a specific resource and upload to S3. System will validate if user is in the same tenant with the resource or not. If not, raise HTTP 403 error
-
-4. Retrieve a file
-- Endpoint: GET `/api/v1/files/{file_id}`
-- Description: Retrieve a file by its id. If the file does not exist or was not uploaded by the current user, raise HTTP 404 error
-
-5. Delete a file
-- Endpoint: DELETE `/api/v1/files/{file_id}`
-- Description: Delete a file by its id. If the file does not exist or was not uploaded by the current user, raise HTTP 404 error. 
-System will also remove the file associated with the file in S3
-
 ### Deployment
 This project was set up to be deployed on an AWS EC2 instance using Docker and Docker Compose.
 
@@ -142,3 +133,37 @@ docker exec -it /bin/sh app
 ```shell
 pytest
 ```
+
+### Improvements
+- JWT algorithm should be changed to RS256 instead of HS256 in order to be more secure and easy to scale in microservices architecture
+- Use AWS ECS instead of EC2 to deploy the application
+- Use AWS RDS instead of EC2 to store data
+
+# API Documentation
+After deploying successfully, you can access the API documentation at [http://localhost:8000/api-doc](http://localhost:8000/api-doc)
+Below is the list of endpoints that you can use to interact with the system in brief
+
+1. Get access token
+- Endpoint: POST `/api/v1/auth/token`
+- Description: Get access token for the current user. The access token will be used to authenticate the user in the system
+
+2. Refresh access token
+- Endpoint: POST `/api/v1/auth/token/refresh`
+- Description: Refresh access token for the current user. The access token will be used to authenticate the user in the system
+
+3. List files
+- Endpoint: GET `/api/v1/files`
+- Description: List all files in the system that were uploaded by the current user
+
+4. Upload a file
+- Endpoint: POST `/api/v1/files`
+- Upload file to a specific resource and upload to S3. System will validate if user is in the same tenant with the resource or not. If not, raise HTTP 403 error
+
+5. Retrieve a file
+- Endpoint: GET `/api/v1/files/{file_id}`
+- Description: Retrieve a file by its id. If the file does not exist or was not uploaded by the current user, raise HTTP 404 error
+
+6. Delete a file
+- Endpoint: DELETE `/api/v1/files/{file_id}`
+- Description: Delete a file by its id. If the file does not exist or was not uploaded by the current user, raise HTTP 404 error. 
+System will also remove the file associated with the file in S3
