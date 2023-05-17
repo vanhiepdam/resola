@@ -2,7 +2,6 @@
 import pytest
 from django.contrib.auth.models import Permission
 
-from file_management.tests.factories.file import FileFactory
 from tenant.tests.factories.resource import ResourceFactory
 from tenant.tests.factories.tenant import TenantFactory
 from user.tests.factories.user import UserFactory
@@ -82,7 +81,7 @@ class TestCreateFileViewSetV1:
 
         # then
         assert response.status_code == 403
-        assert response.json() == {"detail": "You do not have permission to perform this action."}
+        assert response.json() == {"detail": "You do not have permission to upload to this tenant."}
 
     @pytest.mark.parametrize(
         "permission_codename",
@@ -134,7 +133,7 @@ class TestCreateFileViewSetV1:
             "add_file",
         ],
     )
-    def test_success__user_are_in_multiple_tenants(self, api_client, permission_codename):
+    def test_success__user_are_in_multiple_tenants(self, api_client, permission_codename, mocker):
         # given user
         tenant_a = TenantFactory()
         tenant_b = TenantFactory()
@@ -154,12 +153,11 @@ class TestCreateFileViewSetV1:
         )
         user.user_permissions.set(permissions)
 
-        # given files
-        file = FileFactory(uploaded_by=user, resource__tenant=tenant_a)
-        FileFactory(uploaded_by=user, resource__tenant=tenant_b)
-
-        # give noise files
-        FileFactory(uploaded_by=UserFactory())
+        # mock presign url
+        mocker.patch(
+            "shared.storages.aws_s3.AwsS3StorageProvider.get_presign_url",
+            return_value="https://test.com",
+        )
 
         # payload
         payload = {
@@ -169,7 +167,7 @@ class TestCreateFileViewSetV1:
 
         # when
         api_client.force_authenticate(user=user)
-        response = api_client.post(f"/api/v1/files", data=payload, format="json")
+        response = api_client.post("/api/v1/files", data=payload, format="json")
 
         # then
         assert response.status_code == 201

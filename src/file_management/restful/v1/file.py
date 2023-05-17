@@ -18,6 +18,7 @@ from file_management.permissions.file_permissions import (
     CanUploadFilePermission,
 )
 from file_management.restful.filters.file_filter import ListFileFilter
+from file_management.serializers.v1.file.create import CreateFileSerializerV1
 from file_management.serializers.v1.file.list import ListFileSerializerV1
 from file_management.serializers.v1.file.retrieve import RetrieveFileSerializerV1
 
@@ -31,11 +32,13 @@ class FileViewSetV1(
     def get_queryset(self) -> QuerySet:
         return File.objects.all().filter_by_user_id(user_id=self.request.user.id).full_prefetch()
 
-    def get_serializer_class(self):  # type: ignore
+    def get_serializer_class(self):  # type: ignore  # noqa[CFQ004]
         if self.action == "list":
             return ListFileSerializerV1
         elif self.action == "retrieve":
             return RetrieveFileSerializerV1
+        elif self.action == "create":
+            return CreateFileSerializerV1
         return super().get_serializer_class()
 
     def get_permissions(self) -> list[BasePermission]:  # noqa[CFQ004]
