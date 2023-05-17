@@ -48,4 +48,7 @@ class FileViewSetV1(
         elif self.action == "destroy":
             permission_classes = [CanDeleteFilePermission]  # type: ignore[list-item]
             return [permission() for permission in permission_classes]  # type: ignore[operator]
+        elif self.action == "create":
+            permission_classes = [CanUploadFilePermission]  # type: ignore[list-item]
+            return [permission() for permission in permission_classes]  # type: ignore[operator]
         return super().get_permissions()  # type: ignore[no-any-return]
