@@ -1,14 +1,8 @@
-from abc import abstractmethod
-
-from shared.storages.storage_provider import StorageProvider
+from django.conf import settings
+from django.utils.module_loading import import_string
 
 
 class FileModelMixin:
-    @abstractmethod
-    @property
-    def storage_provider(self) -> StorageProvider:
-        pass
-
     def get_file_presigned_url(  # noqa: CFQ002
         self,
         field_name: str,
@@ -17,7 +11,8 @@ class FileModelMixin:
         has_create: bool = False,
         has_delete: bool = False,
     ) -> str:
-        return self.storage_provider.get_presign_url(
+        storage_provider_class = import_string(settings.FILE_MODEL_STORAGE_PROVIDER)
+        return storage_provider_class().get_presign_url(  # type: ignore[no-any-return]
             blob_name=getattr(self, field_name).name,
             has_read=has_read,
             has_write=has_write,

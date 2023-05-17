@@ -1,7 +1,9 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.db.models import QuerySet
 
 from shared.models.base_model import BaseModel
+from tenant.models import Tenant
 
 
 class User(BaseModel, AbstractUser):
@@ -12,6 +14,9 @@ class User(BaseModel, AbstractUser):
         blank=True,
         through_fields=("user", "tenant"),
     )
+
+    def get_tenants(self) -> QuerySet[Tenant]:
+        return self.tenants.all()
 
 
 class TenantUser(BaseModel):
