@@ -1,5 +1,6 @@
 from django.db.models import QuerySet
 from django_filters.rest_framework import DjangoFilterBackend
+from drf_spectacular.utils import extend_schema
 from rest_framework.filters import OrderingFilter
 from rest_framework.mixins import (
     CreateModelMixin,
@@ -18,7 +19,10 @@ from file_management.permissions.file_permissions import (
     CanUploadFilePermission,
 )
 from file_management.restful.filters.file_filter import ListFileFilter
-from file_management.serializers.v1.file.create import CreateFileSerializerV1
+from file_management.serializers.v1.file.create import (
+    CreateFileResponseSerializerV1,
+    CreateFileSerializerV1,
+)
 from file_management.serializers.v1.file.list import ListFileSerializerV1
 from file_management.serializers.v1.file.retrieve import RetrieveFileSerializerV1
 
@@ -55,3 +59,7 @@ class FileViewSetV1(
             permission_classes = [CanUploadFilePermission]  # type: ignore[list-item]
             return [permission() for permission in permission_classes]  # type: ignore[operator]
         return super().get_permissions()  # type: ignore[no-any-return]
+
+    @extend_schema(responses=CreateFileResponseSerializerV1)
+    def create(self, request, *args, **kwargs):  # type: ignore
+        return super().create(request, *args, **kwargs)

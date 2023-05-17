@@ -54,7 +54,6 @@ TODO AFTER DEPLOY TO AWS
 #### Prerequisites
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/)
-
 - This guidance has been tested on MacOS only
 
 #### Steps
@@ -127,8 +126,8 @@ This project was set up to be deployed on an AWS EC2 instance using Docker and D
 The process of deployment is automated by Github Action
 1. Create a new branch for new feature
 2. Push the code to the new branch
-3. Create a pull request to merge the new branch to the main branch. CI will be triggered automatically
-4. After the pull request is approved, merge it to the main branch. CD will be triggered automatically
+3. Create a pull request to merge the new branch to the main branch. CI will be triggered automatically, merge will be blocked if CI failed or running
+4. Once the CI was successfully, dev can merge it to the main branch. CD will be triggered automatically
 
 ### System designs
 Check out the [system design documentation](diagrams/system/README.md).
