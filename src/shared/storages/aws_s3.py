@@ -22,18 +22,9 @@ class AwsS3StorageProvider(StorageProvider):
     def _generate_presign_url(
         self,
         blob_name: str,
-        has_write: bool,
-        has_create: bool,
-        has_delete: bool,
+        action: str,
         expire_seconds: int,
     ) -> str:
-        action = READ_ACTION
-        if has_write:
-            action = WRITE_ACTION
-        if has_create:
-            action = CREATE_ACTION
-        if has_delete:
-            action = DELETE_ACTION
         url: str = self.client.generate_presigned_url(
             action,
             Params={"Bucket": self.bucket_name, "Key": blob_name},
@@ -49,14 +40,24 @@ class AwsS3StorageProvider(StorageProvider):
         has_create: bool = False,
         has_delete: bool = False,
         expire_seconds: Optional[int] = None,
-    ) -> str:
+    ) -> Optional[str]:
         if not expire_seconds:
             expire_seconds = self.expire_seconds
 
-        return self._generate_presign_url(
-            blob_name,
-            has_write=has_write,
-            has_create=has_create,
-            has_delete=has_delete,
-            expire_seconds=expire_seconds,
-        )
+        # generate presign url
+        action = None
+        if has_read:
+            action = READ_ACTION
+        if has_write:
+            action = WRITE_ACTION
+        if has_create:
+            action = CREATE_ACTION
+        if has_delete:
+            action = DELETE_ACTION
+        if action is not None:
+            return self._generate_presign_url(
+                blob_name,
+                action=action,
+                expire_seconds=expire_seconds,
+            )
+        return None
