@@ -25,8 +25,3 @@ COPY --from=requirements-stage /tmp/requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
 COPY . /app
-
-WORKDIR /app/src
-
-RUN chmod +x /app/deployments/entrypoint.sh
-ENTRYPOINT ["/app/deployments/entrypoint.sh"]
