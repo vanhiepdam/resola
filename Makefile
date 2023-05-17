@@ -26,3 +26,14 @@ start:
 shell:
 	@echo "Starting shell..."
 	python src/manage.py shell
+
+
+build:
+	docker-compose -f deployments/docker-compose.yml --project-directory . build
+
+
+up:
+	docker-compose -f deployments/docker-compose.yml --project-directory . up -d
+
+down:
+	docker-compose -f deployments/docker-compose.yml --project-directory . down
