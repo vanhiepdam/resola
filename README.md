@@ -43,6 +43,10 @@ TODO
 
 ### Usage
 TODO
+Test api
+Deploy on local
+Run test
+Run seeds
 
 ### API Documentation
 TODO

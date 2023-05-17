@@ -1,0 +1,62 @@
+[
+  {
+    "model": "user.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$YMRwjl04r8EpZ05XjuFzt3$YWmr6/Op+wHUVswXw+Pi7eH3GGq6AoH9/uS85bdujuw=",
+      "last_login": "2023-05-17T12:04:34.299Z",
+      "is_superuser": true,
+      "username": "admin",
+      "first_name": "",
+      "last_name": "",
+      "email": "admin@admin.com",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2023-05-16T17:54:28.721Z",
+      "created_at": "2023-05-16T17:54:29.000Z",
+      "updated_at": "2023-05-16T17:54:29.000Z",
+      "created_by": null,
+      "updated_by": null,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "tenant.tenant",
+    "pk": 1,
+    "fields": {
+      "created_at": "2023-05-16T18:06:54.909Z",
+      "updated_at": "2023-05-17T12:05:00.394Z",
+      "created_by": 1,
+      "updated_by": 1,
+      "code": "tenant_a",
+      "name": "Tenant A"
+    }
+  },
+  {
+    "model": "tenant.resource",
+    "pk": 1,
+    "fields": {
+      "created_at": "2023-05-16T18:07:07.296Z",
+      "updated_at": "2023-05-17T12:05:22.244Z",
+      "created_by": 1,
+      "updated_by": 1,
+      "tenant": 1,
+      "code": "resource_1",
+      "name": "Resource 1"
+    }
+  },
+  {
+    "model": "tenant.resource",
+    "pk": 2,
+    "fields": {
+      "created_at": "2023-05-17T12:05:30.312Z",
+      "updated_at": "2023-05-17T12:05:37.080Z",
+      "created_by": 1,
+      "updated_by": 1,
+      "tenant": 1,
+      "code": "resource_2",
+      "name": "Resource 2"
+    }
+  }
+]
