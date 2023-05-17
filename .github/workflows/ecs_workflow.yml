@@ -1,6 +1,11 @@
 name: CI/CD Workflow to deploy to Amazon ECS
 
-on: none
+on:
+  pull_request:
+    branches: [ "main" ]
+  push:
+    branches:
+      - main
 
 env:
   AWS_REGION: ap-northeast-1                   # set this to your preferred AWS region, e.g. us-west-1
@@ -26,6 +31,7 @@ permissions:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'neverrun' }}
     strategy:
       max-parallel: 1
       matrix:

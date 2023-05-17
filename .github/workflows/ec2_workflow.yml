@@ -1,21 +1,11 @@
 name: CI/CD Workflow to deploy to Amazon EC2
 
 on:
-#  pull_request:
-#    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
   push:
     branches:
-      - feature/deploy
-
-env:
-  SECRET_KEY: 3a677a%h+t_*kwr)
-  DATABASE_NAME: resola_be
-  DATABASE_USER: postgres
-  DATABASE_PASSWORD: postgres
-  DEPLOY_DATABASE_HOST: db
-  DATABASE_HOST: 127.0.0.1
-  DATABASE_PORT: 5432
-  AWS_STORAGE_BUCKET_NAME: resolatest
+      - main
 
 permissions:
   contents: read
