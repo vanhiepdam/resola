@@ -35,7 +35,7 @@ class TestListFileViewSetV1:
             "add_file",
         ]
     )
-    def test_success__user_has_correct_permission(self, api_client, permission_codename):
+    def test_success__user_has_correct_permission(self, api_client, permission_codename, mocker):
         # given user
         user = UserFactory()
 
@@ -53,6 +53,13 @@ class TestListFileViewSetV1:
         # give noise files
         FileFactory(uploaded_by=UserFactory())
 
+        # mock data
+        url_value = "https://test.txt"
+        mocker.patch(
+            "shared.storages.aws_s3.AwsS3StorageProvider._generate_presign_url",
+            return_value=url_value,
+        )
+
         # when
         api_client.force_authenticate(user=user)
         response = api_client.get("/api/v1/files")
@@ -62,6 +69,8 @@ class TestListFileViewSetV1:
         data = response.data
         assert len(data["results"]) == 1
         assert data["results"][0]["id"] == file.id
+        assert data["results"][0]["file_name"] == file.get_original_file_name("file")
+        assert data["results"][0]["presigned_url"] == url_value
 
         assert data["results"][0]["uploaded_by"]["id"] == user.id
         assert data["results"][0]["uploaded_by"]["username"] == user.username
@@ -81,7 +90,7 @@ class TestListFileViewSetV1:
             "add_file",
         ]
     )
-    def test_success__filter_by_tenant_id(self, api_client, permission_codename):
+    def test_success__filter_by_tenant_id(self, api_client, permission_codename, mocker):
         # given user
         tenant_a = TenantFactory()
         tenant_b = TenantFactory()
@@ -107,6 +116,13 @@ class TestListFileViewSetV1:
         # give noise files
         FileFactory(uploaded_by=UserFactory())
 
+        # mock data
+        url_value = "https://test.txt"
+        mocker.patch(
+            "shared.storages.aws_s3.AwsS3StorageProvider._generate_presign_url",
+            return_value=url_value,
+        )
+
         # when
         api_client.force_authenticate(user=user)
         response = api_client.get(f"/api/v1/files?tenant_id={tenant_a.id}")
@@ -116,6 +132,8 @@ class TestListFileViewSetV1:
         data = response.data
         assert len(data["results"]) == 1
         assert data["results"][0]["id"] == file.id
+        assert data["results"][0]["file_name"] == file.get_original_file_name("file")
+        assert data["results"][0]["presigned_url"] == url_value
 
         assert data["results"][0]["uploaded_by"]["id"] == user.id
         assert data["results"][0]["uploaded_by"]["username"] == user.username

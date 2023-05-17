@@ -58,7 +58,7 @@ class TestRetrieveFileViewSetV1:
             "add_file",
         ]
     )
-    def test_success__user_has_correct_permission(self, api_client, permission_codename):
+    def test_success__user_has_correct_permission(self, api_client, permission_codename, mocker):
         # given user
         user = UserFactory()
 
@@ -76,6 +76,13 @@ class TestRetrieveFileViewSetV1:
         # give noise files
         FileFactory(uploaded_by=UserFactory())
 
+        # mock data
+        url_value = "https://test.txt"
+        mocker.patch(
+            "shared.storages.aws_s3.AwsS3StorageProvider._generate_presign_url",
+            return_value=url_value,
+        )
+
         # when
         api_client.force_authenticate(user=user)
         response = api_client.get(f"/api/v1/files/{file.id}")
@@ -84,6 +91,8 @@ class TestRetrieveFileViewSetV1:
         assert response.status_code == 200
         data = response.data
         assert data["id"] == file.id
+        assert data["file_name"] == file.get_original_file_name("file")
+        assert data["presigned_url"] == url_value
 
         assert data["uploaded_by"]["id"] == user.id
         assert data["uploaded_by"]["username"] == user.username
