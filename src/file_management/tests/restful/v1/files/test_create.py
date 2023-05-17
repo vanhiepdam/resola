@@ -16,7 +16,7 @@ class TestCreateFileViewSetV1:
         response = api_client.post("/api/v1/files")
 
         # then
-        assert response.status_code == 403
+        assert response.status_code == 401
 
     @pytest.mark.parametrize(
         "permission_codename",

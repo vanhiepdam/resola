@@ -16,6 +16,7 @@ drf-spectacular = "0.25.1"
 django-filter = "22.1"
 boto3 = "1.26.133"
 django-storages = "^1.13.2"
+djangorestframework-simplejwt = "^5.2.2"
 
 [tool.poetry.group.test.dependencies]
 pytest = "7.3.1"
@@ -76,5 +77,6 @@ module = [
     "boto3.*",
     "factory.*",
     "django_filters.*",
+    "rest_framework_simplejwt.*"
 ]
 ignore_missing_imports = true

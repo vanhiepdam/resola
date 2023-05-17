@@ -15,7 +15,7 @@ class TestListFileViewSetV1:
         response = api_client.get("/api/v1/files")
 
         # then
-        assert response.status_code == 403
+        assert response.status_code == 401
 
     def test_failed__user_does_not_have_correct_permission(self, api_client):
         # given

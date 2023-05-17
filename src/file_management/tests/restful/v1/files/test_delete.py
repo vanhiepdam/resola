@@ -18,7 +18,7 @@ class TestDeleteFileViewSetV1:
         response = api_client.delete(f"/api/v1/files/{file.id}")
 
         # then
-        assert response.status_code == 403
+        assert response.status_code == 401
 
     @pytest.mark.parametrize(
         "permission_codename",
