@@ -163,17 +163,6 @@ The process of deployment is automated by Github Action
 ### System designs
 Check out the [system design documentation](diagrams/system/README.md).
 
-### Testing
-1. Open shell terminal in the backend docker container
-```shell
-docker exec -it /bin/sh app
-```
-
-2. Run test
-```shell
-pytest
-```
-
 ### Improvements
 - JWT algorithm should be changed to RS256 instead of HS256 in order to be more secure and easy to scale in microservices architecture
 - Use AWS ECS instead of EC2 to deploy the application
