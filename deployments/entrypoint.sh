@@ -1,4 +1,5 @@
 #!/bin/sh
-python manage.py collectstatic
-python manage.py migrate
-python manage.py runserver 0.0.0.0:8000
+python src/manage.py collectstatic
+python src/manage.py migrate
+python src/manage.py loaddata seeds/seed.json
+python src/manage.py runserver 0.0.0.0:8000
